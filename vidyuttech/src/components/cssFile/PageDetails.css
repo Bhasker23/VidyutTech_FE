@@ -1,0 +1,83 @@
+.pageParent {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: black;
+  font-family: "Visby Round CF", sans-serif;
+  height: 400px;
+  color: #cccccc;
+  padding: 20px;
+  margin-top: 10%;
+}
+
+.address {
+  /* border: 1px solid blue; */
+  width: 33%;
+  color: #cccccc;
+}
+.contact {
+  display: flex;
+  /* border: 1px solid black; */
+  align-items: center;
+  justify-content: baseline;
+  padding: 8px;
+}
+.location {
+  display: flex;
+  /* border: 1px solid black; */
+  align-items: center;
+}
+
+.location > p {
+  text-align: left;
+  width: 70%;
+}
+.pages {
+  /* border: 1px solid yellow; */
+  width: 33%;
+  text-align: left;
+  padding-top: 15px;
+  padding-left: 120px;
+}
+
+.pages > h3 > a {
+  color: #6c6a55;
+}
+
+.contactUs {
+  width: 33%;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.input {
+  height: 25px;
+  width: 90%;
+  background-color: #171717;
+  border: none;
+  padding: 10px;
+  font-size: medium;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.query {
+  padding-top: 0px;
+  height: 100px;
+  width: 90%;
+  background-color: #171717;
+  border: none;
+  padding: 10px;
+  font-size: medium;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.submit {
+  height: 35px;
+  width: 95%;
+  background-color: white;
+  border: none;
+  padding: 10px;
+  font-size: medium;
+  margin-bottom: 10px;
+}

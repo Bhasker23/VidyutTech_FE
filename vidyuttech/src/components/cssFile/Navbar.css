@@ -1,0 +1,28 @@
+.navbarDiv {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+  width: 96%;
+  height: 70px;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  padding: 8px;
+  background-color: steelblue;
+  color: white;
+  font-family: sans-serif;
+  border-radius: 15px;
+}
+
+.nav {
+  /* border: 1px solid black; */
+  display: flex;
+  width: 70%;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+}
+
+.navLink {
+  color: white;
+}

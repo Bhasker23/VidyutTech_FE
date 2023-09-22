@@ -1,0 +1,70 @@
+.aboutFirstDiv {
+  display: flex;
+  /* border: 1px solid red; */
+  margin: 5%;
+  width: 96%;
+  margin-left: 2%;
+  justify-content: space-between;
+  align-items: center;
+}
+.ness {
+  background-color: #f4f5f7;
+  font-family: "Visby Round CF", sans-serif;
+  text-align: left;
+  padding: 2%;
+  border-radius: 45px;
+  width: 45%;
+  object-fit: cover;
+}
+
+.qmax {
+  background-color: #f4f5f7;
+  font-family: "Visby Round CF", sans-serif;
+  padding: 2%;
+  border-radius: 5px;
+  width: 45%;
+  border-radius: 45px;
+  object-fit: cover;
+}
+
+.qmax > img {
+  height: 430px;
+}
+.qmax > div {
+  text-align: left;
+}
+
+.textInFirstDiv {
+  color: #878787;
+  font-size: 18px;
+}
+
+.ness > a {
+  color: #878787;
+  display: flex;
+  width: 110px;
+  /* border: 1px solid red; */
+  margin-top: 50px;
+  justify-content: space-between;
+  align-items: center;
+  font-style: normal;
+  font-size: large;
+}
+.qmax > div > a {
+  color: #878787;
+  display: flex;
+  width: 130px;
+  /* border: 1px solid red; */
+  margin-top: 50px;
+  justify-content: space-between;
+  align-items: center;
+  font-style: normal;
+  font-size: large;
+}
+
+.homeMediadiv {
+  display: flex;
+  /* border: 1px solid red; */
+  margin: 2%;
+  justify-content: space-between;
+}
