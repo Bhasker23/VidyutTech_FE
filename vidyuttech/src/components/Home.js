@@ -9,7 +9,7 @@ function Home() {
     <div>
       <p
         style={{
-          fontFamily: "Visby Round CF, sans-serif;",
+          fontFamily: "Visby Round CF, sans-serif",
           fontWeight: "42px",
           fontSize: "50px",
           fontStyle: "italic",
@@ -79,6 +79,16 @@ function Home() {
         />
       </div>
       <PageDetails />
+      {/* 
+      <video
+        class="elementor-background-video-hosted elementor-html5-video"
+        autoplay=""
+        muted=""
+        playsinline=""
+        loop=""
+        src="https://videos.files.wordpress.com/OpRxWsth/12-1.m4v"
+        style="width: 1322.03px; height: 743.642px;"
+      ></video> */}
     </div>
   );
 }

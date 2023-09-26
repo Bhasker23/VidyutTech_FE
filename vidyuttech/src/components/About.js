@@ -1,7 +1,12 @@
 import React from "react";
+import PageDetails from "./PageDetails";
 
 function About() {
-  return <div></div>;
+  return (
+    <div>
+      <PageDetails />
+    </div>
+  );
 }
 
 export default About;

@@ -8,7 +8,7 @@ function HomeMedia({ imgUrl, text }) {
       <img alt="" src={imgUrl}></img>
       <div>
         <h2>{text}</h2>
-        <p className="textInFirstDiv"></p>
+
         <a href="https://nunam.com/products/">
           <span>Source</span>
           <FaArrowRightLong />

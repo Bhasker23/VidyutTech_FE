@@ -1,22 +1,23 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PageDetails from "./PageDetails";
+import { useDispatch } from "react-redux";
+import { setNameSlice } from "../redux/slice/userName";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPass] = useState(null);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
-    let userLogedIn = false;
-
     console.log(name, email, password);
     if (name == null || email == null || password == null) {
       alert("Please enter the vaild details");
     } else {
-      userLogedIn = true;
+      dispatch(setNameSlice(name));
       navigate("/userFeature");
     }
   }
@@ -27,18 +28,21 @@ function Login() {
         <input
           type="text"
           placeholder="Name"
+          required
           onChange={(e) => setName(e.target.value)}
         />
         <br />
         <input
           type="email"
           placeholder="email"
+          required
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
         <input
           type="password"
           placeholder="password"
+          required
           onChange={(e) => setPass(e.target.value)}
         />
         <br />

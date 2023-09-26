@@ -1,0 +1,43 @@
+.batteryInfo {
+  border: 1px solid black;
+  display: flex;
+  padding: 4px;
+  justify-content: left;
+  text-align: center;
+  font-family: sans-serif;
+  background-color: #9bb6eb;
+  border-radius: 15px;
+
+  margin: 0px 20px 5px 35px;
+}
+.batteryInfo > h2 {
+  margin-left: 20px;
+}
+.inputBatteryID {
+  height: 20px;
+  margin-left: 20px;
+  margin-top: 25px;
+  border-radius: 5px;
+  border: 0;
+}
+.inputButton {
+  height: 22px;
+  width: 80px;
+  font-weight: 700;
+  margin-left: 8px;
+  margin-top: 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: orangered;
+  color: white;
+}
+.reLogin {
+  color: white;
+  width: 200px;
+  /* border: 1px solid red; */
+  margin-top: 50px;
+  align-items: center;
+  background-color: brown;
+  padding: 8px;
+  border-radius: 10px;
+}
