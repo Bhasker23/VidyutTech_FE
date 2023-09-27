@@ -20,6 +20,14 @@
   border-radius: 5px;
   border: 0;
 }
+.dropDown {
+  height: 20px;
+  width: 120px;
+  margin-left: 10px;
+  margin-top: 26px;
+  border-radius: 5px;
+  border: 0;
+}
 .inputButton {
   height: 22px;
   width: 80px;
