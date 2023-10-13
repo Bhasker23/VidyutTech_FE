@@ -39,6 +39,16 @@
   background-color: orangered;
   color: white;
 }
+.receivedbatteryInfo {
+  display: flex;
+  border: 3px solid black;
+  margin: 0px 50px 5px 25%;
+  text-align: left;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  border-radius: 20px;
+  width: 50%;
+  padding-left: 60px;
+}
 .reLogin {
   color: white;
   width: 200px;

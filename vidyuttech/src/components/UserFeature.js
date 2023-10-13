@@ -8,14 +8,35 @@ function UserFeature() {
   const [batteryID, setBatterID] = useState("");
   const [type, setType] = useState("");
   const [specificType, setSpecificType] = useState("");
+  const [batteryInfo, setBatterInfo] = useState(null);
+
   const ref = useRef(null);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
 
   const name = useSelector((state) => state?.userNameReducer?.name);
 
-  function getBatteryInfo() {
-    console.log("getBatteryInfo ", batteryID);
+  async function getBatteryInfo() {
+    // console.log("getbatteryInfo", batteryID);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/user/getBatteryInfo?batteryId=${batteryID}`,
+        {
+          method: "GET",
+        }
+      );
+      const result = await response.json();
+      console.log("result hai : ", result);
+      if (result.message === undefined) {
+        setBatterInfo(result);
+        // console.log("batterInfo hello ", batteryInfo);
+      } else {
+        setBatterInfo(null);
+        alert(`OOPS ! Battery Not found with given BatteryID : ${batteryID}`);
+      }
+    } catch (error) {
+      console.log("Error hai : ", error);
+    }
     ref.current.value = "";
   }
 
@@ -59,6 +80,7 @@ function UserFeature() {
         <div className="batteryInfo">
           <h2>Get Battery Info</h2>
           <input
+            required
             placeholder="Enter Battery Id"
             className="inputBatteryID"
             ref={ref}
@@ -68,6 +90,24 @@ function UserFeature() {
             Submit
           </button>
         </div>
+        {batteryInfo ? (
+          <div className="receivedbatteryInfo">
+            <img
+              style={{ width: "35%" }}
+              src="https://i0.wp.com/nunam.com/wp-content/uploads/2023/08/Frame-26.png?resize=1024%2C908&ssl=1"
+              alt="battery"
+            />
+            <div>
+              <h4>BatteryID : {batteryInfo.batteryID}</h4>
+              <h4>Voltage : {batteryInfo.voltage} </h4>
+              <h4>Current : {batteryInfo.current}</h4>
+              <h4>Temprature : {batteryInfo.temp}</h4>
+              <h4>Time : {batteryInfo.time}</h4>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
         <div className="batteryInfo">
           <h2>Get Specific Info of Battery</h2>
           <input

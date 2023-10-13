@@ -1,8 +1,10 @@
 import React from "react";
 import "./cssFile/Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <div className="navbarDiv">
       <h3 style={{ marginLeft: "10px" }}>VidyutTech</h3>
