@@ -18,6 +18,9 @@ function Login() {
     if (name == null || email == null || password == null) {
       alert("Please enter the vaild details");
     } else {
+      let num = Math.floor(Math.random() * 100);
+      let cookie = name + num;
+      localStorage.setItem("cookie", JSON.stringify(cookie));
       dispatch(setNameSlice(name));
       navigate("/userFeature");
     }

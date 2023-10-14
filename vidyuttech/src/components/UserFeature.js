@@ -40,11 +40,14 @@ function UserFeature() {
     ref.current.value = "";
   }
 
-  function getSpecificInfo() {
+  async function getSpecificInfo() {
     if (type === "none") {
       alert("Please Select Valid Type in Get Specific Info of Battery");
     }
     console.log("getSpecificInfo ", batteryID, "type is ", type);
+
+    try {
+    } catch (error) {}
     ref1.current.value = "";
   }
 
@@ -62,7 +65,9 @@ function UserFeature() {
     console.log("everyMinuteData");
   }
 
-  if (name === "") {
+  const cookie = JSON.parse(localStorage.getItem("cookie")) || "";
+  console.log(cookie);
+  if (name === "" && cookie === "") {
     return (
       <>
         <h1>You are not Loged In, Please Login First</h1>
@@ -75,7 +80,7 @@ function UserFeature() {
     return (
       <div>
         <h1 style={{ margin: "50px 0px 100px 0px " }}>
-          Hello {name} Welcome to VidyutTech
+          Hello, {name} Welcome to VidyutTech
         </h1>
         <div className="batteryInfo">
           <h2>Get Battery Info</h2>
