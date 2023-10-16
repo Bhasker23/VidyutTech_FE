@@ -49,6 +49,28 @@
   width: 50%;
   padding-left: 60px;
 }
+.specificInfo {
+  display: flex;
+  border: 3px solid black;
+  margin: 0px 0px 5px 30%;
+  justify-content: center;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -30px 36px -28px inset;
+  border-radius: 20px;
+  width: max-content;
+  padding: 20px;
+  font-weight: bolder;
+}
+.removebtn {
+  height: 25px;
+  width: 90px;
+  font-weight: 700;
+  margin-left: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+}
 .reLogin {
   color: white;
   width: 200px;

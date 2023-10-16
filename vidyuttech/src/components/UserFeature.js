@@ -9,6 +9,7 @@ function UserFeature() {
   const [type, setType] = useState("");
   const [specificType, setSpecificType] = useState("");
   const [batteryInfo, setBatterInfo] = useState(null);
+  const [msg, setMessage] = useState(null);
 
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -40,14 +41,24 @@ function UserFeature() {
     ref.current.value = "";
   }
 
-  async function getSpecificInfo() {
-    if (type === "none") {
+  async function getSpecificInfo(e) {
+    e.preventDefault();
+    if (type === "none" || type === "") {
       alert("Please Select Valid Type in Get Specific Info of Battery");
     }
-    console.log("getSpecificInfo ", batteryID, "type is ", type);
-
     try {
-    } catch (error) {}
+      const response = await fetch(
+        `http://localhost:8080/user/getSpecificInfo${type}?batteryId=${batteryID}`,
+        {
+          method: "GET",
+        }
+      );
+      const result = await response.text();
+      console.log("result hai : ", result);
+      setMessage(result);
+    } catch (error) {
+      console.log("error :", error);
+    }
     ref1.current.value = "";
   }
 
@@ -65,8 +76,8 @@ function UserFeature() {
     console.log("everyMinuteData");
   }
 
-  const cookie = JSON.parse(localStorage.getItem("cookie")) || "";
-  console.log(cookie);
+  const cookie = JSON.parse(sessionStorage.getItem("cookie")) || "";
+
   if (name === "" && cookie === "") {
     return (
       <>
@@ -85,7 +96,6 @@ function UserFeature() {
         <div className="batteryInfo">
           <h2>Get Battery Info</h2>
           <input
-            required
             placeholder="Enter Battery Id"
             className="inputBatteryID"
             ref={ref}
@@ -109,13 +119,21 @@ function UserFeature() {
               <h4>Temprature : {batteryInfo.temp}</h4>
               <h4>Time : {batteryInfo.time}</h4>
             </div>
+            <button
+              style={{ marginTop: "23px" }}
+              className="removebtn"
+              onClick={() => setBatterInfo(null)}
+            >
+              Remove !
+            </button>
           </div>
         ) : (
           ""
         )}
-        <div className="batteryInfo">
+        <form className="batteryInfo" onSubmit={(e) => getSpecificInfo(e)}>
           <h2>Get Specific Info of Battery</h2>
           <input
+            required
             placeholder="Enter Battery Id"
             className="inputBatteryID"
             ref={ref1}
@@ -131,10 +149,19 @@ function UserFeature() {
             <option value="current">Current</option>
             <option value="temprature">Temprature</option>
           </select>
-          <button className="inputButton" onClick={() => getSpecificInfo()}>
-            Submit
-          </button>
-        </div>
+          <button className="inputButton">Submit</button>
+        </form>
+        {msg ? (
+          <div className="specificInfo">
+            {msg}
+            <button className="removebtn" onClick={() => setMessage(null)}>
+              Remove !
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="batteryInfo">
           <h2>Get Specific Info from given Time</h2>
           <input

@@ -20,7 +20,7 @@ function Login() {
     } else {
       let num = Math.floor(Math.random() * 100);
       let cookie = name + num;
-      localStorage.setItem("cookie", JSON.stringify(cookie));
+      sessionStorage.setItem("cookie", JSON.stringify(cookie));
       dispatch(setNameSlice(name));
       navigate("/userFeature");
     }
