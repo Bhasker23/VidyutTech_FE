@@ -10,11 +10,12 @@ function UserFeature() {
   const [specificType, setSpecificType] = useState("");
   const [batteryInfo, setBatterInfo] = useState(null);
   const [msg, setMessage] = useState(null);
+  const [time, setStartTime] = useState(null);
 
   const ref = useRef(null);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
-
+  const timeRef = useRef(null);
   const name = useSelector((state) => state?.userNameReducer?.name);
 
   async function getBatteryInfo() {
@@ -45,31 +46,52 @@ function UserFeature() {
     e.preventDefault();
     if (type === "none" || type === "") {
       alert("Please Select Valid Type in Get Specific Info of Battery");
-    }
-    try {
-      const response = await fetch(
-        `http://localhost:8080/user/getSpecificInfo${type}?batteryId=${batteryID}`,
-        {
-          method: "GET",
-        }
-      );
-      const result = await response.text();
-      console.log("result hai : ", result);
-      setMessage(result);
-    } catch (error) {
-      console.log("error :", error);
+    } else {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/user/getSpecificInfo${type}?batteryId=${batteryID}`,
+          {
+            method: "GET",
+          }
+        );
+        const result = await response.text();
+        console.log("result hai : ", result);
+        setMessage(result);
+      } catch (error) {
+        console.log("error :", error);
+      }
     }
     ref1.current.value = "";
   }
 
-  function specificInfoAtTime() {
+  async function specificInfoAtTime(e) {
+    e.preventDefault();
+    if (specificType === "none" || specificType === "") {
+      alert("Please Select Valid Type in Get Specific Info of Battery");
+    }
+    const moment = require("moment");
+    let date = moment(time).format("DD-MM-YYYY HH:mm");
+    console.log("start ", date);
+    const response = await fetch(
+      `http://localhost:8080/user/getSpecificInfoAtGivenTime${specificType}?batteryId=${batteryID}&startTime=${date}`,
+      {
+        method: "Get",
+      }
+    );
+
+    const result = await response.text();
+    console.log(result);
+
     console.log(
-      "specificInfoAtTime ",
+      "Battery : ",
       batteryID,
-      "specificType is ",
+      "time hai : ",
+      date,
+      " type : ",
       specificType
     );
     ref2.current.value = "";
+    timeRef.current.value = "";
   }
 
   function everyMinuteData() {
@@ -147,7 +169,7 @@ function UserFeature() {
             <option value="none">None</option>
             <option value="voltage">Voltage</option>
             <option value="current">Current</option>
-            <option value="temprature">Temprature</option>
+            <option value="temp">Temprature</option>
           </select>
           <button className="inputButton">Submit</button>
         </form>
@@ -162,15 +184,23 @@ function UserFeature() {
           ""
         )}
 
-        <div className="batteryInfo">
+        <form className="batteryInfo" onSubmit={(e) => specificInfoAtTime(e)}>
           <h2>Get Specific Info from given Time</h2>
           <input
+            required
             placeholder="Enter Battery Id"
             className="inputBatteryID"
-            ref={ref2}
             onChange={(e) => setBatterID(e.target.value)}
+            ref={ref2}
           />
-          <input placeholder="DD-MM-YYYY HH:MM" className="inputBatteryID" />
+          <input
+            required
+            type="datetime-local"
+            placeholder="DD-MM-YYYY HH:MM"
+            className="inputBatteryID"
+            onChange={(e) => setStartTime(e.target.value)}
+            ref={timeRef}
+          />
           <select
             name="type"
             className="dropDown"
@@ -179,12 +209,10 @@ function UserFeature() {
             <option value="none">None</option>
             <option value="voltage">Voltage</option>
             <option value="current">Current</option>
-            <option value="temprature">Temprature</option>
+            <option value="temp">Temprature</option>
           </select>
-          <button className="inputButton" onClick={() => specificInfoAtTime()}>
-            Submit
-          </button>
-        </div>
+          <button className="inputButton">Submit</button>
+        </form>
         <div className="batteryInfo">
           <h2>Get Battery Data of Every Minute </h2>
           <button className="inputButton" onClick={() => everyMinuteData()}>
