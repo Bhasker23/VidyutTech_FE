@@ -14,7 +14,9 @@ function Navbar() {
 
   async function deleteUser() {
     try {
-      await axios.get(`http://localhost:8080/user/logout?userId=${status}`);
+      await axios.get(
+        `https://vidyuttech-production.up.railway.app/user/logout?userId=${status}`
+      );
       dispatch(setloginStatusSlice(""));
       nameDispatch(setNameSlice(""));
     } catch (error) {
