@@ -2,7 +2,7 @@ import React from "react";
 import "./cssFile/PageDetails.css";
 import { GrMail } from "react-icons/gr";
 import { ImLocation2 } from "react-icons/im";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function PageDetails() {
   return (
