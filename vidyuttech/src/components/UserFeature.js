@@ -3,14 +3,22 @@ import PageDetails from "./PageDetails";
 import "./cssFile/UserFeature.css";
 import { useSelector } from "react-redux";
 import HomeMedia from "./HomeMedia";
+import axios from "axios";
 
 function UserFeature() {
-  const [batteryID, setBatterID] = useState("");
+  const [batteryId, setBatterID] = useState("");
   const [type, setType] = useState("");
   const [specificType, setSpecificType] = useState("");
   const [batteryInfo, setBatterInfo] = useState(null);
   const [msg, setMessage] = useState(null);
   const [time, setStartTime] = useState(null);
+  const [specificInfoMessage, setSpecificInfoMessage] = useState([]);
+  const [batteryObj, setBatterytoDB] = useState({
+    batteryID: "",
+    current: "",
+    voltage: "",
+    temp: "",
+  });
 
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -18,11 +26,40 @@ function UserFeature() {
   const timeRef = useRef(null);
   const name = useSelector((state) => state?.userNameReducer?.name);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setBatterytoDB((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  async function addBattery() {
+    console.log("Entered in add battery function");
+    try {
+      console.log(batteryObj);
+      const addBatteryObject = await axios.post(
+        "https://vidyuttech-production.up.railway.app/battery/addBattery",
+        batteryObj
+      );
+
+      console.log(addBatteryObject);
+      // Reset form after successful submission
+      setBatterytoDB({
+        batteryID: "",
+        current: "",
+        voltage: "",
+        temp: "",
+      });
+      // setBatterytoDB(addBatteryObject);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async function getBatteryInfo() {
     // console.log("getbatteryInfo", batteryID);
     try {
       const response = await fetch(
-        `http://localhost:8080/user/getBatteryInfo?batteryId=${batteryID}`,
+        `https://vidyuttech-production.up.railway.app/user/getBatteryInfo?batteryId=${batteryId}`,
         {
           method: "GET",
         }
@@ -34,7 +71,7 @@ function UserFeature() {
         // console.log("batterInfo hello ", batteryInfo);
       } else {
         setBatterInfo(null);
-        alert(`OOPS ! Battery Not found with given BatteryID : ${batteryID}`);
+        alert(`OOPS ! Battery Not found with given BatteryID : ${batteryId}`);
       }
     } catch (error) {
       console.log("Error hai : ", error);
@@ -49,7 +86,7 @@ function UserFeature() {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8080/user/getSpecificInfo${type}?batteryId=${batteryID}`,
+          `https://vidyuttech-production.up.railway.app/user/getSpecificInfo${type}?batteryId=${batteryId}`,
           {
             method: "GET",
           }
@@ -73,34 +110,21 @@ function UserFeature() {
     let date = moment(time).format("DD-MM-YYYY HH:mm");
     console.log("start ", date);
     const response = await fetch(
-      `http://localhost:8080/user/getSpecificInfoAtGivenTime${specificType}?batteryId=${batteryID}&startTime=${date}`,
+      `https://vidyuttech-production.up.railway.app/user/getSpecificInfoAtGivenTime${specificType}?batteryId=${batteryId}&startTime=${date}`,
       {
         method: "Get",
       }
     );
-
     const result = await response.text();
-    console.log(result);
+    const dataArray = result.split(",");
+    // console.log( result);
+    setSpecificInfoMessage(dataArray);
 
-    console.log(
-      "Battery : ",
-      batteryID,
-      "time hai : ",
-      date,
-      " type : ",
-      specificType
-    );
     ref2.current.value = "";
     timeRef.current.value = "";
   }
 
-  function everyMinuteData() {
-    console.log("everyMinuteData");
-  }
-
-  const cookie = JSON.parse(sessionStorage.getItem("cookie")) || "";
-
-  if (name === "" && cookie === "") {
+  if (name === "") {
     return (
       <>
         <h1>You are not Loged In, Please Login First</h1>
@@ -115,6 +139,46 @@ function UserFeature() {
         <h1 style={{ margin: "50px 0px 100px 0px " }}>
           Hello, {name} Welcome to VidyutTech
         </h1>
+        <div className="addBattery">
+          <h2>Add Battery</h2>
+          <form className="batteryAddingForm">
+            <input
+              name="batteryID"
+              type="number"
+              className="inputBatteryID"
+              placeholder="Enter Battery Id"
+              value={batteryObj.batteryID}
+              onChange={handleChange}
+            />
+            <input
+              name="current"
+              type="number"
+              className="inputBatteryID"
+              placeholder="Enter current"
+              value={batteryObj.current}
+              onChange={handleChange}
+            />
+            <input
+              name="voltage"
+              type="number"
+              className="inputBatteryID"
+              placeholder="Enter voltage"
+              value={batteryObj.voltage}
+              onChange={handleChange}
+            />
+            <input
+              name="temp"
+              type="number"
+              className="inputBatteryID"
+              placeholder="Enter temprature"
+              value={batteryObj.temp}
+              onChange={handleChange}
+            />
+          </form>
+          <button className="inputButton" onClick={() => addBattery()}>
+            Submit
+          </button>
+        </div>
         <div className="batteryInfo">
           <h2>Get Battery Info</h2>
           <input
@@ -135,7 +199,7 @@ function UserFeature() {
               alt="battery"
             />
             <div>
-              <h4>BatteryID : {batteryInfo.batteryID}</h4>
+              <h4>BatteryID : {batteryInfo.batteryId}</h4>
               <h4>Voltage : {batteryInfo.voltage} </h4>
               <h4>Current : {batteryInfo.current}</h4>
               <h4>Temprature : {batteryInfo.temp}</h4>
@@ -213,12 +277,29 @@ function UserFeature() {
           </select>
           <button className="inputButton">Submit</button>
         </form>
-        <div className="batteryInfo">
+        {specificInfoMessage && specificInfoMessage.length > 0 && (
+          <>
+            <button
+              className="removebtn"
+              onClick={() => setSpecificInfoMessage(null)}
+            >
+              Remove !
+            </button>
+            <div className="specificInfo-AtTime-grid">
+              {specificInfoMessage.map((data, index) => (
+                <div key={index} className="gridItem">
+                  {data}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+        {/* <div className="batteryInfo">
           <h2>Get Battery Data of Every Minute </h2>
           <button className="inputButton" onClick={() => everyMinuteData()}>
             Get
           </button>
-        </div>
+        </div> */}
         <div className="homeMediadiv">
           <HomeMedia
             imgUrl={

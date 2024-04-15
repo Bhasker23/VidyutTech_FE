@@ -1,0 +1,31 @@
+.form {
+  /* border: 1px solid red;/ */
+  text-align: center;
+  width: 30%;
+  margin: 40px 0px 40px 35%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  height: 22rem;
+  padding: 10px;
+  border-radius: 5px;
+}
+.inputTag {
+  height: 1.8rem;
+  margin-top: 15px;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.form button {
+  margin-top: 20px;
+  color: cornflowerblue;
+  padding: 10px;
+  width: 6rem;
+  background-color: white;
+  border: 1px solid cornflowerblue;
+  border-radius: 4px;
+}
+
+/* .form :hover {
+  background-color: cornflowerblue;
+  color: white;
+} */

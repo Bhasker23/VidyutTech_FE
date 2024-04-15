@@ -2,16 +2,15 @@
   display: flex;
   justify-content: space-between;
   /* border: 1px solid red; */
-  width: 96%;
+  width: 100%;
   height: 70px;
-  margin-top: 2%;
-  margin-left: 2%;
-  margin-bottom: 2%;
+  margin-top: 1%;
+  /* margin-left: 2%; */
   padding: 8px;
-  background-color: steelblue;
+  background-color: rgb(101, 84, 84);
   color: white;
-  font-family: sans-serif;
-  border-radius: 15px;
+  /* font-family: sans-serif; */
+  /* border-radius: 15px; */
 }
 
 .nav {
@@ -25,4 +24,11 @@
 
 .navLink {
   color: white;
+  text-decoration: none;
+}
+.nav :hover {
+  text-decoration: underline;
+  text-decoration-color: white;
+  transition: 0.4s;
+  line-height: 50px;
 }

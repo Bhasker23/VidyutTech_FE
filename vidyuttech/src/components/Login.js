@@ -5,21 +5,25 @@ import { setNameSlice } from "../redux/slice/userName";
 import { useNavigate } from "react-router-dom";
 import HomeMedia from "./HomeMedia";
 import axios from "axios";
+import { setloginStatusSlice } from "../redux/slice/loginLogoutStatus";
+import { FaLock } from "react-icons/fa";
+import "./cssFile/Login.css";
+import { TextField } from "@mui/material";
 
 function Login() {
   const [name, setName] = useState(null);
-  const [userId, setUserId] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPass] = useState(null);
   const [number, setNumber] = useState(null);
   const dispatch = useDispatch();
+  const status = useDispatch();
+
   const navigate = useNavigate();
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const numRef = useRef(null);
   const passRef = useRef(null);
-  const idRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,8 +33,7 @@ function Login() {
     } else {
       try {
         await axios
-          .post("http://localhost:8080/user/signUp", {
-            userId: userId,
+          .post("https://vidyuttech-production.up.railway.app/user/signUp", {
             name: name,
             number: number,
             email: email,
@@ -39,15 +42,14 @@ function Login() {
           .then((response) => {
             console.log(response);
           });
-        let num = Math.floor(Math.random() * 100);
-        let cookie = name + num;
-        sessionStorage.setItem("cookie", JSON.stringify(cookie));
+
         dispatch(setNameSlice(name));
+        status(setloginStatusSlice(number));
         navigate("/userFeature");
       } catch (error) {
+        console.log(error);
         alert(error.response.data.message);
         nameRef.current.value = "";
-        idRef.current.value = "";
         emailRef.current.value = "";
         passRef.current.value = "";
         numRef.current.value = "";
@@ -59,16 +61,15 @@ function Login() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <h2>Login</h2>
+          <FaLock style={{ marginTop: "25px", marginLeft: "8px" }} />
+        </div>
+
+        {/* <TextField id="inputTag" label="Name" variant="outlined" /> */}
         <input
-          type="text"
-          placeholder="userId"
-          required
-          ref={idRef}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <br />
-        <input
+          className="inputTag"
           type="text"
           placeholder="Name"
           required
@@ -77,6 +78,7 @@ function Login() {
         />
         <br />
         <input
+          className="inputTag"
           type="tel"
           placeholder="Mobile Number"
           required
@@ -87,6 +89,7 @@ function Login() {
         />
         <br />
         <input
+          className="inputTag"
           type="email"
           placeholder="email"
           ref={emailRef}
@@ -95,6 +98,7 @@ function Login() {
         />
         <br />
         <input
+          className="inputTag"
           type="password"
           ref={passRef}
           placeholder="password"
